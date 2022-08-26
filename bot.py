@@ -6,7 +6,6 @@ import shutil
 import threading
 import socket 
 import sys,random
-from winreg import *
 
 #from telebot import apihelper
 
